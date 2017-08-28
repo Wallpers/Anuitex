@@ -11,6 +11,10 @@ namespace BlackJack
         private GameManager _game;
         private PlayerManager _player;
 
+        public bool IsBurnt => _game.IsBurnt;
+
+        public bool IsBlackJack => _game.IsBlackJack;
+
         public void RegisterPlayer()
         {
             var name = ReadName();
@@ -26,10 +30,10 @@ namespace BlackJack
 
         private decimal ReadCash()
         {
-            Console.WriteLine("Input your cash size and press 'Enter' :");
-
             while (true)
             {
+                Console.WriteLine("Input your cash size and press 'Enter' :");
+
                 var input = Console.ReadLine();
 
                 if (Decimal.TryParse(input, out decimal cash))
@@ -50,12 +54,12 @@ namespace BlackJack
                 new GameManager(100, 1000)
             };
 
-            Console.WriteLine("0 - Game on 1 - 10.");
-            Console.WriteLine("1 - Game on 10 - 100.");
-            Console.WriteLine("2 - Game on 100 - 1000.");
-
             while (true)
             {
+                Console.WriteLine("0 - Game on 1 - 10.");
+                Console.WriteLine("1 - Game on 10 - 100.");
+                Console.WriteLine("2 - Game on 100 - 1000.");
+
                 var input = Console.ReadLine();
 
                 if (Int32.TryParse(input, out int answer) && answer < 3 && answer >= 0)
@@ -69,7 +73,7 @@ namespace BlackJack
             }
         }
 
-        public void MakeBet()
+        public bool MakeBet()
         {
             var min = _game.Min;
             var max = _game.Max;
@@ -77,7 +81,7 @@ namespace BlackJack
             if (_player.Cash < min)
             {
                 Console.WriteLine("Not enough money.");
-                return;
+                return false;
             }
 
             if (_player.Cash < max)
@@ -93,7 +97,7 @@ namespace BlackJack
                 {
                     money = _player.Give(money);
                     _game.MakeBet(money);
-                    return;
+                    return true;
                 }
                 Console.WriteLine("Error.");
             }
@@ -123,6 +127,7 @@ namespace BlackJack
                 if (turns == AvailableTurns.Stand)
                 {
                     _game.TakeTurn(Turn.Stand);
+                    return;
                 }
 
                 PrintTurns(turns);
@@ -178,7 +183,7 @@ namespace BlackJack
                     return (Turn)answer;
                 }
 
-                Console.WriteLine("Error.");
+                Console.WriteLine("Error. Chose your turn.");
             }
         }
 
@@ -198,6 +203,7 @@ namespace BlackJack
         public void Winning()
         {
             var money = _game.Winning();
+            _player.Get(money);
 
             if (money > 0)
             {

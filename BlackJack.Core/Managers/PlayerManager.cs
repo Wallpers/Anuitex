@@ -25,6 +25,14 @@ namespace BlackJack.Core.Managers
             return money;
         }
 
+        public void Get(decimal money)
+        {
+            if (money > 0)
+            {
+                _player.Cash += money;
+            }
+        }
+
         public string Name => _player.Name;
 
         public decimal Cash => _player.Cash;

@@ -19,7 +19,6 @@ namespace BlackJack.Core.Models
             }
         }
 
-        // Must be in ViewModel.
         public override string ToString()
             => $"{Rank} {Suit}";
     }

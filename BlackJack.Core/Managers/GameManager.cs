@@ -48,6 +48,10 @@ namespace BlackJack.Core.Managers
 
         public bool DealerPlays => _dealerPlace.Score < 17;
 
+        public bool IsBurnt => _playerPlace.IsBurnt;
+
+        public bool IsBlackJack => _playerPlace.IsBlackJack;
+
         public void MakeBet(decimal bet)
         {
             _playerPlace.MakeBet(bet);
@@ -70,13 +74,6 @@ namespace BlackJack.Core.Managers
                 turns |= AvailableTurns.Hit;
             }
 
-            var dealerCards = _dealerPlace.Cards;
-
-            if (dealerCards[0].Rank == Rank.Ace)
-            {
-                turns |= AvailableTurns.Insurance;
-            }
-
             var playerCards = _playerPlace.Cards;
 
             if (playerCards.Count == 2)
@@ -86,6 +83,13 @@ namespace BlackJack.Core.Managers
                 {
                     turns |= AvailableTurns.Split;
                 }
+            }
+
+            var dealerCards = _dealerPlace.Cards;
+
+            if (dealerCards[0].Rank == Rank.Ace && playerCards.Count == 2)
+            {
+                turns |= AvailableTurns.Insurance;
             }
 
             return turns;
