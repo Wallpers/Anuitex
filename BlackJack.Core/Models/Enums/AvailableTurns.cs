@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlackJack.Core
+namespace BlackJack.Core.Models
 {
     [Flags]
     public enum AvailableTurns

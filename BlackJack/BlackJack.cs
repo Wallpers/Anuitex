@@ -6,8 +6,6 @@ namespace BlackJack
     {
         public static void Application()
         {
-
-
             var lobby = new Lobby();
             lobby.RegisterPlayer();
 
@@ -35,9 +33,6 @@ namespace BlackJack
                     Console.WriteLine("Error.");
                 }
             } while (true);
-
-
-
         }
     }
 }

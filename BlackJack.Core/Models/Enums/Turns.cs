@@ -1,4 +1,4 @@
-﻿namespace BlackJack.Core
+﻿namespace BlackJack.Core.Models
 {
     public enum Turn
     {
