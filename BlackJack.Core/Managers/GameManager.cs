@@ -110,6 +110,7 @@ namespace BlackJack.Core.Managers
             if (turn == Turn.Double)
             {
                 _playerPlace.Add(_shoes.Take());
+
                 _playerPlace.Stand();
             }
 

@@ -10,6 +10,7 @@ namespace BlackJack
     {
         private GameManager _game;
         private PlayerManager _player;
+        private decimal _bet;
 
         public bool IsBurnt => _game.IsBurnt;
 
@@ -93,10 +94,10 @@ namespace BlackJack
             {
                 Console.WriteLine($"Make a bet. [{min}, {max}]");
                 var input = Console.ReadLine();
-                if (Decimal.TryParse(input, out decimal money) && money >= min && money <= max)
+                if (Decimal.TryParse(input, out _bet) && _bet >= min && _bet <= max)
                 {
-                    money = _player.Give(money);
-                    _game.MakeBet(money);
+                    _bet = _player.Give(_bet);
+                    _game.MakeBet(_bet);
                     return true;
                 }
                 Console.WriteLine("Error.");
@@ -132,6 +133,10 @@ namespace BlackJack
 
                 PrintTurns(turns);
                 var turn = GetAnswer();
+                if (turn == Turn.Double)
+                {
+                    _game.MakeBet(_player.Give(_bet));
+                }
                 _game.TakeTurn(turn);
             }
         }

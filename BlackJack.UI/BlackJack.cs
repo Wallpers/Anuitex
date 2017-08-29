@@ -11,24 +11,28 @@ namespace BlackJack
 
             do
             {
-                lobby.ChooseGame();
-                if (!lobby.MakeBet())
+                while (true)
                 {
-                REPEAT:
-                    Console.WriteLine("Change game or quit ? 1 - change, 2 - quit.");
-                    var answer = Console.ReadLine();
-                    if (answer == "1")
+                    lobby.ChooseGame();
+                    if (!lobby.MakeBet())
                     {
-                        continue;
-                    }
+                        Console.WriteLine("Change game or quit ? 1 - change, 2 - quit.");
+                        var answer = Console.ReadLine();
 
-                    if (answer == "2")
-                    {
-                        return;
-                    }
+                        if (answer == "1")
+                        {
+                            continue;
+                        }
 
-                    Console.WriteLine("Error");
-                    goto REPEAT;
+                        if (answer == "2")
+                        {
+                            return;
+                        }
+
+                        Console.WriteLine("Error");
+
+                    }
+                    break;
                 }
                 lobby.Deal();
                 lobby.Play();
